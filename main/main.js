@@ -3,9 +3,8 @@ const { timer } = require("rxjs");
 const { takeUntil } = require("rxjs/operators");
 const { Neurosity } = require("@neurosity/sdk");
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const fs = require('fs');
-const crypto = require('crypto');
-
+require('fs');
+require('crypto');
 // Initialize the neurosity device
 const neurosity = new Neurosity({
   deviceId: process.env.DEVICE_ID
@@ -24,8 +23,7 @@ const csvWriter = createCsvWriter({
     {id: 'value', title: 'Value'}
   ]
 });
-
-let counter = 0; // Initialize counter
+// Initialize counter
 const readings = []; // Array to store all readings
 
 const logReading = async (data) => {
