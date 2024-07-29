@@ -11,10 +11,14 @@ const neurosity = new Neurosity({
   deviceId: process.env.DEVICE_ID
 });
 
-// Set up CSV writer
+// Set up CSV writer with appropriate headers
 const csvWriter = createCsvWriter({
   path: 'neurosity_readings.csv',
-
+  header: [
+    {id: 'timestamp', title: 'Timestamp'},
+    {id: 'channel', title: 'Channel'},
+    {id: 'value', title: 'Value'}
+  ]
 });
 
 let counter = 0; // Initialize counter
@@ -23,20 +27,20 @@ const readings = []; // Array to store all readings
 // Function to log readings to the array
 const logReading = async (data) => {
   const records = data.map(d => ({
-    counter: ++counter,
-    reading: JSON.stringify(d)
+    timestamp: Date.now(),
+    channel: 'Cz', // Example channel, replace with actual channel info
+    value: d
   }));
 
   readings.push(...records);
   console.log('Reading added to the array');
 };
 
-// Function to write readings to CSV, encrypt the file, and create SHA-256 hash
+// Function to write readings to CSV
 const finalizeAndEncryptCsv = async () => {
   await csvWriter.writeRecords(readings);
-  console.log('Data written to CSV');}
-
-
+  console.log('Data written to CSV');
+}
 
 // Authenticate and start capturing readings
 const startCapturing = async () => {
@@ -56,7 +60,7 @@ const startCapturing = async () => {
       )
       .subscribe(async (brainwaves) => {
         console.log(brainwaves);
-        await logReading([brainwaves]);
+        await logReading(brainwaves);
       });
 
     // Function to handle graceful shutdown
@@ -79,5 +83,3 @@ const startCapturing = async () => {
 };
 
 startCapturing();
-
-
