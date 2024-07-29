@@ -11,7 +11,11 @@ const neurosity = new Neurosity({
   deviceId: process.env.DEVICE_ID
 });
 
-// Set up CSV writer with appropriate headers
+// Verify environment variables are loaded
+console.log('DEVICE_ID:', process.env.DEVICE_ID);
+console.log('EMAIL:', process.env.EMAIL);
+console.log('PASSWORD:', process.env.PASSWORD);
+
 const csvWriter = createCsvWriter({
   path: 'neurosity_readings.csv',
   header: [
@@ -24,7 +28,6 @@ const csvWriter = createCsvWriter({
 let counter = 0; // Initialize counter
 const readings = []; // Array to store all readings
 
-// Function to log readings to the array
 const logReading = async (data) => {
   const records = data.map(d => ({
     timestamp: Date.now(),
@@ -36,18 +39,16 @@ const logReading = async (data) => {
   console.log('Reading added to the array');
 };
 
-// Function to write readings to CSV
 const finalizeAndEncryptCsv = async () => {
   await csvWriter.writeRecords(readings);
   console.log('Data written to CSV');
 }
 
-// Authenticate and start capturing readings
 const startCapturing = async () => {
   try {
     await neurosity.login({
-      email: process.env.EMAIL, // Or however you authenticate
-      password: process.env.PASSWORD // If needed
+      email: process.env.EMAIL,
+      password: process.env.PASSWORD
     });
 
     console.log("Logged in!");
@@ -63,7 +64,6 @@ const startCapturing = async () => {
         await logReading(brainwaves);
       });
 
-    // Function to handle graceful shutdown
     const handleExit = async () => {
       console.log('Closing subscription and exiting.');
       subscription.unsubscribe();
@@ -71,7 +71,6 @@ const startCapturing = async () => {
       process.exit();
     };
 
-    // Set a timeout to call handleExit after 30 seconds
     setTimeout(handleExit, 30000);
 
     process.on('SIGINT', handleExit);
