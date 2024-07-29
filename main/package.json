@@ -1,34 +1,18 @@
 {
-  "name": "main",
+  "name": "neurosity_project",
   "version": "1.0.0",
-  "description": "First app using Neurosity SDK",
-  "main": "index.js",
+  "description": "Neurosity project to capture brainwave data and write to CSV.",
+  "main": "main.js",
   "scripts": {
     "start": "node main.js",
     "install-deps": "npm install dotenv rxjs @neurosity/sdk csv-writer"
   },
-  "keywords": [
-    "neurosity"
-  ],
-  "author": "name123454",
-  "license": "MIT",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "@neurosity/sdk": "^6.5.10",
-    "crypto": "^1.0.1",
     "csv-writer": "^1.6.0",
     "dotenv": "^16.4.5",
-    "rsjs": "^0.1.2",
     "rxjs": "^7.8.1"
-  },
-  "directories": {
-    "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AdamFekkah/brain-biometrics-using-neurosity.git"
-  },
-  "bugs": {
-    "url": "https://github.com/AdamFekkah/brain-biometrics-using-neurosity/issues"
-  },
-  "homepage": "https://github.com/AdamFekkah/brain-biometrics-using-neurosity#readme"
+  }
 }
