@@ -23,7 +23,6 @@
   "directories": {
     "test": "test"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AdamFekkah/brain-biometrics-using-neurosity.git"
