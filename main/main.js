@@ -23,14 +23,16 @@ const csvWriter = createCsvWriter({
     {id: 'value', title: 'Value'}
   ]
 });
-// Initialize counter
+
+let counter = 0; // Initialize counter
 const readings = []; // Array to store all readings
 
 const logReading = async (data) => {
+  console.log('Logging reading data:', data); // Debug log
   const records = data.map(d => ({
     timestamp: Date.now(),
-    channel: 'Cz', // Example channel, replace with actual channel info
-    value: d
+    channel: d.channel, // Replace with actual channel info from the data
+    value: d.value // Replace with actual value info from the data
   }));
 
   readings.push(...records);
@@ -44,6 +46,7 @@ const finalizeAndEncryptCsv = async () => {
 
 const startCapturing = async () => {
   try {
+    console.log("Attempting to log in...");
     await neurosity.login({
       email: process.env.EMAIL,
       password: process.env.PASSWORD
@@ -58,7 +61,7 @@ const startCapturing = async () => {
         )
       )
       .subscribe(async (brainwaves) => {
-        console.log(brainwaves);
+        console.log('Received brainwaves:', brainwaves); // Debug log
         await logReading(brainwaves);
       });
 
